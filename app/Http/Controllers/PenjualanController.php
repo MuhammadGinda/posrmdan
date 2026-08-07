@@ -85,9 +85,11 @@ class PenjualanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Penjualan $penjualan)
     {
-        //
+        $penjualan->load('itemPenjualan.produk', 'user');
+
+        return view('penjualan.show', compact('penjualan'));
     }
 
     /**
@@ -140,30 +142,30 @@ class PenjualanController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Penjualan $penjualan)
-{
-     $this->authorize('delete', $penjualan);   
+    {
+        $this->authorize('delete', $penjualan);
 
-    if ($penjualan->status !== 'OPEN') {
-        return redirect()->route('penjualan.index')
-            ->with('errors', 'Transaksi sudah selesai tidak bisa dibatalkan');
-    }
-
-    // Izinkan admin/owner hapus semua, kasir hanya miliknya sendiri
-    if ($penjualan->user_id !== Auth::id() && Auth::user()->role->name === 'kasir') {
-        return redirect()->route('penjualan.index')
-            ->with('errors', 'Anda tidak memiliki akses untuk menghapus transaksi ini');
-    }
-
-    DB::transaction(function () use ($penjualan) {
-        foreach ($penjualan->ItemPenjualan as $item) {
-            $item->produk->increment('stok', $item->kuantitas);
+        if ($penjualan->status !== 'OPEN') {
+            return redirect()->route('penjualan.index')
+                ->with('errors', 'Transaksi sudah selesai tidak bisa dibatalkan');
         }
-        $penjualan->itemPenjualan()->delete();
-        $penjualan->delete();
-    });
 
-    return redirect()
-        ->route('penjualan.index')
-        ->with('success', 'Transaksi berhasil dibatalkan');
-}
+        // Izinkan admin/owner hapus semua, kasir hanya miliknya sendiri
+        if ($penjualan->user_id !== Auth::id() && Auth::user()->role->name === 'kasir') {
+            return redirect()->route('penjualan.index')
+                ->with('errors', 'Anda tidak memiliki akses untuk menghapus transaksi ini');
+        }
+
+        DB::transaction(function () use ($penjualan) {
+            foreach ($penjualan->ItemPenjualan as $item) {
+                $item->produk->increment('stok', $item->kuantitas);
+            }
+            $penjualan->itemPenjualan()->delete();
+            $penjualan->delete();
+        });
+
+        return redirect()
+            ->route('penjualan.index')
+            ->with('success', 'Transaksi berhasil dibatalkan');
+    }
 }

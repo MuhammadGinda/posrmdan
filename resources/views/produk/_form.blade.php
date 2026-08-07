@@ -1,3 +1,61 @@
+<style>
+    .produk-form-page label {
+        color: #33395c;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+    }
+
+    .produk-form-page .form-control {
+        border: 1px solid #e1e4f7;
+        border-radius: 8px;
+        padding: 0.55rem 0.9rem;
+    }
+    .produk-form-page .form-control:focus {
+        border-color: #4f5fe8;
+        box-shadow: 0 0 0 0.2rem rgba(79, 95, 232, 0.15);
+    }
+    .produk-form-page .form-control.is-invalid {
+        border-color: #e5484d;
+    }
+
+    .produk-form-page .invalid-feedback {
+        color: #e5484d;
+    }
+
+    .produk-form-page .img-thumbnail {
+        border-color: #e1e4f7;
+        border-radius: 8px;
+    }
+
+    .produk-form-page .row > div {
+        margin-bottom: 1rem;
+    }
+
+    .produk-form-page .btn-success {
+        background: linear-gradient(90deg, #4f5fe8, #17b6a7);
+        border: none;
+        font-weight: 600;
+        padding: 0.5rem 1.4rem;
+        border-radius: 8px;
+    }
+    .produk-form-page .btn-success:hover {
+        filter: brightness(0.95);
+    }
+
+    .produk-form-page .btn-secondary {
+        background-color: #eef0fd;
+        border: 1px solid #e1e4f7;
+        color: #4f5fe8;
+        font-weight: 600;
+        padding: 0.5rem 1.4rem;
+        border-radius: 8px;
+    }
+    .produk-form-page .btn-secondary:hover {
+        background-color: #e1e4f7;
+        color: #33395c;
+    }
+</style>
+
 @csrf
 
 @if (!empty($produk->foto))
@@ -85,12 +143,12 @@
 
     <script>
         function previewImage(input) {
-            const preview = document.getElemenById('preview');
+            const preview = document.getElementById('preview');
             const file = input.files[0];
 
             if (file) {
-                preview.src = URL.createObjectURL('file');
-                preview.style.display = 'blok';
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = 'block';
             }
         }
     </script>

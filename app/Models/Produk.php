@@ -9,7 +9,7 @@ class Produk extends Model
 {
     use HasFactory;
 
-    protected $table = 'produk'; // WAJIB benar
+    protected $table = 'produk';
 
     protected $fillable = [
         'user_id',
@@ -25,9 +25,8 @@ class Produk extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-
     public function itemPenjualan()
     {
-        return $this->belongsTo(ItemPenjualan::class, 'produk_id');
+        return $this->hasMany(ItemPenjualan::class, 'produk_id');
     }
 }
