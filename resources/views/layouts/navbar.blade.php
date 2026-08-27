@@ -74,6 +74,15 @@
             Users
           </a>
         </li>
+
+        
+        <li class="nav-item">
+          <a class="nav-link {{ request()->is('jenis*') ? 'active fw-semibold' : '' }}" 
+             href="{{ route('jenis.index') }}">
+            Jenis
+          </a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link {{ request()->is('produk*') ? 'active fw-semibold' : '' }}" 
              href="{{ route('produk.index') }}">

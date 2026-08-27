@@ -14,15 +14,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-        RoleSeeder::class,
-        UserSeeder::class,
-        ProdukSeeder::class,
-        PenjualanSeeder::class,
-      ]);
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            RoleSeeder::class,
+            UserSeeder::class,
+            ProdukSeeder::class,
+            PenjualanSeeder::class,
         ]);
+
+        User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            ['name' => 'Test User']
+        );
     }
 }

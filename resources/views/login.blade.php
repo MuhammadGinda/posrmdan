@@ -13,17 +13,22 @@
         }
 
         .login-card {
-            width: 20rem;
+            width: 22rem;
             border: none;
-            border-radius: 14px;
-            box-shadow: 0 15px 35px rgba(90, 100, 120, 0.15);
-            padding: 8px 4px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(76, 81, 191, 0.12);
+            padding: 12px 6px;
+            background: #ffffff;
         }
 
         .login-card .card-title {
-            color: #4a5568;
+            background: linear-gradient(90deg, #4c51bf, #434190);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-weight: 700;
-            margin-top: 8px;
+            font-size: 1.25rem;
+            margin-top: 10px;
             margin-bottom: 4px;
         }
 
@@ -33,7 +38,7 @@
         }
 
         .login-card .form-label {
-            color: #8ea4bd;
+            color: #6b7fb0;
             font-weight: 600;
             font-size: 0.85rem;
         }
@@ -45,13 +50,13 @@
         }
 
         .login-card .form-control:focus {
-            border-color: #a9bdd4;
-            box-shadow: 0 0 0 3px rgba(169, 189, 212, 0.25);
+            border-color: #7c86e0;
+            box-shadow: 0 0 0 3px rgba(124, 134, 224, 0.2);
         }
 
         .login-card .form-check-input:checked {
-            background-color: #a9bdd4;
-            border-color: #a9bdd4;
+            background-color: #4c51bf;
+            border-color: #4c51bf;
         }
 
         .login-card .form-check-label {
@@ -60,15 +65,17 @@
         }
 
         .login-card .btn-primary {
-            background-color: #a9bdd4;
+            background: linear-gradient(90deg, #4c6ef5, #2dd4bf);
             border: none;
             border-radius: 8px;
             font-weight: 600;
-            padding: 8px 0;
+            padding: 9px 0;
+            color: #fff;
+            transition: opacity 0.2s ease;
         }
 
         .login-card .btn-primary:hover {
-            background-color: #93a9c3;
+            opacity: 0.9;
         }
 
         .login-card .badge.text-bg-danger {
