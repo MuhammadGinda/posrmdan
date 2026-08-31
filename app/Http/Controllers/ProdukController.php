@@ -23,15 +23,16 @@ class ProdukController extends Controller
 
         $keyword = $request->input('search');
 
+        // Menambahkan with('jenis') agar data relasi jenis ikut terload di Blade
+        $query = Produk::with('jenis');
+
         if ($keyword) {
-            $products = Produk::when($keyword, function ($query) use ($keyword) {
-                $query->where('nama', 'like', '%' . $keyword . '%');
-            })
+            $products = $query->where('nama', 'like', '%' . $keyword . '%')
                 ->orderBy('nama')
                 ->paginate(10)
                 ->withQueryString();
         } else {
-            $products = Produk::latest()->paginate(10)->withQueryString();
+            $products = $query->latest()->paginate(10)->withQueryString();
         }
 
         return view('produk.index', compact('products'));
@@ -59,11 +60,11 @@ class ProdukController extends Controller
         $dataReq = $request->validated();
 
         $data['user_id'] = Auth::id();
-        $data['jenis_id'] = $dataReq['jenis_id'] ?? null;
+        $data['jenis_id'] = $dataReq['jenis_id'];
         $data['nama'] = $dataReq['name'];
         $data['harga_beli'] = $dataReq['purchase_price'];
         $data['harga_jual'] = $dataReq['selling_price'];
-        $data['stok'] = $dataReq['stock'] ?? true;
+        $data['stok'] = $dataReq['stock'] ?? 0;
         $data['foto'] = $request->hasFile('foto')
             ? $request->file('foto')->store('products', 'public')
             : '';
@@ -104,7 +105,7 @@ class ProdukController extends Controller
 
         $data = [
             'user_id'    => Auth::id(),
-            'jenis_id'   => $dataReq['jenis_id'] ?? null,
+            'jenis_id'   => $dataReq['jenis_id'], // Diubah: hilangkan '?? null'
             'nama'       => $dataReq['name'],
             'harga_beli' => $dataReq['purchase_price'],
             'harga_jual' => $dataReq['selling_price'],

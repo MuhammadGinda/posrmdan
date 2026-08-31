@@ -322,7 +322,7 @@
                         <div class="produk-nama">{{ $product->nama }}</div>
 
                         @if ($product->jenis)
-                            <span class="produk-jenis">{{ $product->jenis->nama }}</span>
+                            <span class="produk-jenis">{{ $product->jenis->nama_jenis }}</span>
                         @endif
 
                         <div class="produk-harga-jual">Rp {{ number_format($product->harga_jual) }}</div>
