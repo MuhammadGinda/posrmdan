@@ -152,6 +152,10 @@
             background: #eef0fd;
             color: #4a4fc0;
         }
+        .role-badge.role-none {
+            background: #f2f3fa;
+            color: #9aa0c9;
+        }
 
         .btn-edit-akun {
             background: #eef0fd;
@@ -253,7 +257,9 @@
                                 <td class="users-name">{{ $user->name }}</td>
                                 <td class="users-email">{{ $user->email }}</td>
                                 <td>
-                                    <span class="role-badge role-{{ $user->role->name }}">{{ $user->role->name }}</span>
+                                    <span class="role-badge role-{{ $user->role->name ?? 'none' }}">
+                                        {{ $user->role->name ?? 'Belum ada role' }}
+                                    </span>
                                 </td>
                                 <td>
                                     <div class="d-flex gap-2 align-items-center">
