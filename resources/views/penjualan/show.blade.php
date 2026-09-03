@@ -86,6 +86,7 @@
             color: #33395c;
             vertical-align: middle;
             border-color: #eef0f7;
+            padding: 0.85rem 0.75rem;
         }
 
         .btn-back {
@@ -102,10 +103,10 @@
         }
 
         .produk-thumb {
-            width: 48px;
-            height: 48px;
+            width: 130px;
+            height: 130px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 12px;
             border: 1px solid #eef0f7;
         }
     </style>

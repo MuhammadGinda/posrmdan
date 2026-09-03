@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @include('layouts.navbar')
+@include('layouts.navbar')
 
     <style>
         body {

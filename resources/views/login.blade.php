@@ -5,8 +5,22 @@
 @section('content')
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
+        .login-card .login-icon {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 4px auto 8px;
+            border-radius: 50%;
+            background: #4c51bf;
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+
         body {
             background: linear-gradient(160deg, #eef1f6, #f3ede8);
             min-height: 100vh;
@@ -65,7 +79,7 @@
         }
 
         .login-card .btn-primary {
-            background: linear-gradient(90deg, #4c6ef5, #2dd4bf);
+            background: #4c51bf;
             border: none;
             border-radius: 8px;
             font-weight: 600;
@@ -86,6 +100,7 @@
     </style>
 
     <div class="card login-card text-center position-absolute top-50 start-50 translate-middle">
+        <div class="login-icon"><i class="bi bi-shield-lock-fill"></i></div>
         <h5 class="card-title">Login POS</h5>
         <div class="card-body">
             <form action="{{ route('auth') }}" method="POST">

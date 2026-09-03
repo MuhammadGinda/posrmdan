@@ -32,7 +32,7 @@
     }
 
     .produk-form-page .btn-success {
-        background: linear-gradient(90deg, #4f5fe8, #17b6a7);
+        background: #4f5fe8;
         border: none;
         font-weight: 600;
         padding: 0.5rem 1.4rem;

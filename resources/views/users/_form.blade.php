@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
+    @include('layouts.navbar')
+
 <style>
     .users-form-container h3 {
         color: #1e2a4a;
