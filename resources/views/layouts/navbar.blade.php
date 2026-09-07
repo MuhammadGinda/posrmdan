@@ -68,6 +68,9 @@
           </a>
         </li>
 
+
+       {{-- Menu Users dan Jenis HANYA untuk ADMIN (role_id = 1) --}}
+        @if(auth()->check() && auth()->user()->role_id == 1)
         <li class="nav-item">
           <a class="nav-link {{ request()->is('admin/users*') ? 'active fw-semibold' : '' }}" 
              href="{{ route('admin.users') }}">
@@ -82,7 +85,7 @@
             Jenis
           </a>
         </li>
-
+@endif
         <li class="nav-item">
           <a class="nav-link {{ request()->is('produk*') ? 'active fw-semibold' : '' }}" 
              href="{{ route('produk.index') }}">
