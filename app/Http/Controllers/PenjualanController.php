@@ -46,7 +46,7 @@ class PenjualanController extends Controller
      */
     public function create(SearchRequest $request)
     {
-        $sale = Penjualan::firstOrCreate (
+        $sale = Penjualan::firstOrCreate(
             [
                 'user_id' => Auth::id(),
                 'status'  => 'OPEN'
@@ -59,14 +59,14 @@ class PenjualanController extends Controller
 
         $keyword = $request->input('search');
 
-        if($keyword) {
+        if ($keyword) {
             $products = Produk::when($keyword, function ($query) use ($keyword) {
                 $query->where('nama', 'like', '%' . $keyword . '%');
             })
-            ->orderBy('nama')
-            ->get();
+                ->orderBy('nama')
+                ->get();
         } else {
-              $products = Produk::OrderBy('nama')->get();
+            $products = Produk::OrderBy('nama')->get();
         }
 
         $mode = 'create';
@@ -93,6 +93,16 @@ class PenjualanController extends Controller
     }
 
     /**
+     * Cetak struk transaksi.
+     */
+    public function struk(Penjualan $penjualan)
+    {
+        $penjualan->load('itemPenjualan.produk', 'user');
+
+        return view('penjualan.struk', compact('penjualan'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Penjualan $penjualan)
@@ -108,28 +118,48 @@ class PenjualanController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * Menangani checkout dengan metode CASH (hitung kembalian) atau QRIS.
      */
     public function update(Request $request, Penjualan $penjualan)
     {
         $request->validate([
-             'payment_method' => 'required|in:CASH,QRIS' 
+            'payment_method' => 'required|in:CASH,QRIS',
+            'uang_dibayar'   => 'nullable|integer|min:0',
         ]);
 
         if ($penjualan->status !== 'OPEN') {
             return back()->with('errors', 'Transaksi sudah diproses');
         }
+
         if ($penjualan->itemPenjualan()->count() === 0) {
             return back()->with('errors', 'Keranjang masih kosong');
         }
 
-        DB::transaction(function () use ($penjualan, $request){
+        $total = $penjualan->itemPenjualan()->sum('subtotal');
 
-            $total = $penjualan->itemPenjualan()->sum('subtotal');
+        if ($request->payment_method === 'CASH') {
+            $uangDibayar = (int) $request->uang_dibayar;
 
+            if ($uangDibayar < $total) {
+                return back()
+                    ->with('errors', 'Uang yang diterima kurang dari total pembayaran')
+                    ->withInput();
+            }
+
+            $kembalian = $uangDibayar - $total;
+        } else {
+            // QRIS dianggap pas, tanpa kembalian
+            $uangDibayar = $total;
+            $kembalian = 0;
+        }
+
+        DB::transaction(function () use ($penjualan, $request, $total, $uangDibayar, $kembalian) {
             $penjualan->update([
                 'metode_pembayaran' => $request->payment_method,
                 'total_pembayaran'  => $total,
-                'status'            => 'COMPLETED' 
+                'uang_dibayar'      => $uangDibayar,
+                'kembalian'         => $kembalian,
+                'status'            => 'COMPLETED',
             ]);
         });
 

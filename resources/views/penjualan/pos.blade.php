@@ -319,6 +319,24 @@
             background: #fdecec;
             color: #c9302c;
         }
+
+        .pos-alert-error {
+            background: #fdecec;
+            color: #c9302c;
+            border: 1px solid #f3c2c2;
+            border-radius: 10px;
+            padding: 0.6rem 0.9rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+        }
+
+        #qris-fields {
+            background: #fbfbff;
+            border: 1px dashed #c7cbf2;
+            border-radius: 10px;
+            padding: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
     </style>
 
     <div class="pos-wrapper">
@@ -431,21 +449,52 @@
                         </table>
                     </div>
 
+                    @php
+                        $totalCart = $sale->itemPenjualan->sum('subtotal');
+                    @endphp
+
                     <div class="pos-footer">
                         <div class="pos-total-row">
                             <span class="pos-total-label">TOTAL PEMBAYARAN</span>
-                            <span class="pos-total-value">Rp {{ number_format($sale->total_pembayaran) }}</span>
+                            <span class="pos-total-value">Rp {{ number_format($totalCart) }}</span>
                         </div>
+
+                        @if (session('errors'))
+                            <div class="pos-alert-error">{{ session('errors') }}</div>
+                        @endif
 
                         <form method="POST" action="{{ route('penjualan.update', $sale->id) }}"
                             onsubmit="return confirm('Yakin ingin checkout ?')">
                             @csrf
                             @method('PUT')
-                            <select name="payment_method" class="form-select pos-select mb-2">
+
+                            <input type="hidden" id="total-pembayaran" value="{{ $totalCart }}">
+
+                            <select name="payment_method" id="payment-method" class="form-select pos-select mb-2"
+                                onchange="togglePaymentFields()" required>
                                 <option value="">Pilih Pembayaran</option>
                                 <option value="CASH">Cash</option>
                                 <option value="QRIS">QRIS</option>
                             </select>
+
+                            <div id="cash-fields" style="display:none;">
+                                <input type="number" name="uang_dibayar" id="uang-dibayar"
+                                    class="form-control pos-select mb-2" placeholder="Uang Diterima"
+                                    min="0" oninput="hitungKembalian()">
+
+                                <div class="pos-total-row">
+                                    <span class="pos-total-label">KEMBALIAN</span>
+                                    <span class="pos-total-value" id="kembalian-value">Rp 0</span>
+                                </div>
+                            </div>
+
+                            <div id="qris-fields" class="text-center" style="display:none;">
+                                <img src="{{ asset('images/qris-dummy2.png') }}" alt="QRIS"
+                                    style="width: 180px; height: auto; margin-bottom: 0.5rem; border: 1px solid #eef0fa; border-radius: 10px; padding: 8px;">
+                                <div class="text-muted" style="font-size:0.85rem;">
+                                    Silakan pindai kode QRIS untuk menyelesaikan pembayaran.
+                                </div>
+                            </div>
 
                             <button class="btn pos-checkout-btn w-100 text-white {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}">
                                 Checkout
@@ -470,5 +519,24 @@
         </div>
 
     </div>
+
+    <script>
+        function togglePaymentFields() {
+            const method = document.getElementById('payment-method').value;
+            document.getElementById('cash-fields').style.display = method === 'CASH' ? 'block' : 'none';
+            document.getElementById('qris-fields').style.display = method === 'QRIS' ? 'block' : 'none';
+            document.getElementById('uang-dibayar').required = method === 'CASH';
+            hitungKembalian();
+        }
+
+        function hitungKembalian() {
+            const total = parseInt(document.getElementById('total-pembayaran').value) || 0;
+            const uangDibayar = parseInt(document.getElementById('uang-dibayar').value) || 0;
+            const kembalian = uangDibayar - total;
+
+            document.getElementById('kembalian-value').textContent =
+                'Rp ' + (kembalian > 0 ? kembalian.toLocaleString('id-ID') : 0);
+        }
+    </script>
 
 @endsection

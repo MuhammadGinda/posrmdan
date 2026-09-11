@@ -38,5 +38,6 @@ Route::middleware('auth')->group(function () {
         Route::resource('/jenis', JenisController::class)->parameters([
             'jenis' => 'jenis'
         ]);
+        Route::get('/penjualan/{penjualan}/struk', [App\Http\Controllers\PenjualanController::class, 'struk'])->name('penjualan.struk');
     });
 });

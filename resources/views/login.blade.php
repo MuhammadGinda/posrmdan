@@ -101,7 +101,7 @@
 
     <div class="card login-card text-center position-absolute top-50 start-50 translate-middle">
         <div class="login-icon"><i class="bi bi-shield-lock-fill"></i></div>
-        <h5 class="card-title">Login POS</h5>
+        <h5 class="card-title">POS GINDA</h5>
         <div class="card-body">
             <form action="{{ route('auth') }}" method="POST">
                 @csrf

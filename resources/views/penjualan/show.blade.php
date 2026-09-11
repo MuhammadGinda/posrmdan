@@ -90,7 +90,7 @@
         }
 
         .btn-back {
-            background: linear-gradient(90deg, #4f5fe8, #17b6a7);
+            background-color: #4F46E5;
             border: none;
             color: #fff;
             font-weight: 600;
@@ -98,7 +98,20 @@
             border-radius: 8px;
         }
         .btn-back:hover {
-            filter: brightness(0.95);
+            background-color: #4338CA;
+            color: #fff;
+        }
+
+        .btn-print {
+            background-color: #4F46E5;
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+        }
+        .btn-print:hover {
+            background-color: #4338CA;
             color: #fff;
         }
 
@@ -126,6 +139,18 @@
             <div class="detail-info-row">
                 <span class="detail-info-label">Metode Pembayaran</span>
                 <span class="detail-info-value">{{ $penjualan->metode_pembayaran }}</span>
+            </div>
+            <div class="detail-info-row">
+                <span class="detail-info-label">Uang Dibayar</span>
+                <span class="detail-info-value">
+                    {{ $penjualan->uang_dibayar !== null ? 'Rp.' . number_format($penjualan->uang_dibayar) : '-' }}
+                </span>
+            </div>
+            <div class="detail-info-row">
+                <span class="detail-info-label">Kembalian</span>
+                <span class="detail-info-value">
+                    {{ $penjualan->kembalian !== null ? 'Rp.' . number_format($penjualan->kembalian) : '-' }}
+                </span>
             </div>
             <div class="detail-info-row">
                 <span class="detail-info-label">Status</span>
@@ -175,7 +200,15 @@
             </tbody>
         </table>
 
-        <a href="{{ route('penjualan.index') }}" class="btn btn-back mt-3">Kembali</a>
+        <div class="d-flex gap-2 mt-3">
+            <a href="{{ route('penjualan.index') }}" class="btn btn-back">Kembali</a>
+
+            @if ($penjualan->status === 'COMPLETED')
+                <a href="{{ route('penjualan.struk', $penjualan->id) }}" target="_blank" class="btn btn-print">
+                     Cetak Struk
+                </a>
+            @endif
+        </div>
     </div>
 
 @endsection
