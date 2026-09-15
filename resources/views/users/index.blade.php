@@ -221,7 +221,7 @@
 
         <div class="users-header">
             <div>
-                <h1>Halaman Users</h1>
+                <h1>Halaman Pengguna</h1>
             </div>
 
             <a href="{{ route('admin.users.create') }}" class="btn btn-create">+ Tambah User</a>

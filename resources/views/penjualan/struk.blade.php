@@ -68,10 +68,10 @@
 </head>
 <body onload="window.print()">
 
-    <div class="center bold" style="font-size: 14px;">POS RMDAN</div>
+    <div class="center bold" style="font-size: 14px;">Toko Ginda</div>
     <div class="center" style="font-size: 10px;">
-        Jl. Contoh Alamat No. 123<br>
-        Telp: 0800-0000-0000
+        Jl.Bebedahan Kp.Silih Asih<br>
+        Telp: 08123456789
     </div>
 
     <div class="divider"></div>

@@ -275,7 +275,7 @@
         @can('viewAny', App\Models\User::class)
             <div class="dashboard-section">
                 <div class="section-title-row">
-                    <h2 class="section-title"><i class="bi bi-graph-up-arrow"></i> Today's Sales</h2>
+                    <h2 class="section-title"><i class="bi bi-graph-up-arrow"></i> Penjualan Hari Ini</h2>
                 </div>
                 <div class="row g-3">
                     <div class="col-md-6">
@@ -301,7 +301,7 @@
 
             <div class="dashboard-section">
                 <div class="section-title-row">
-                    <h2 class="section-title"><i class="bi bi-wallet2"></i> Cash & Payment Status</h2>
+                    <h2 class="section-title"><i class="bi bi-wallet2"></i> Status Kas & Pembayaran</h2>
                 </div>
                 <div class="row g-3">
                     <div class="col-md-6">
@@ -328,7 +328,7 @@
 
         <div class="dashboard-section">
             <div class="section-title-row">
-                <h2 class="section-title"><i class="bi bi-box-seam"></i> Critical Inventory Status</h2>
+                <h2 class="section-title"><i class="bi bi-box-seam"></i>Status Stok Kritis</h2>
             </div>
             <div class="row g-4">
                 <div class="col-md-6">
@@ -403,7 +403,7 @@
 
         <div class="dashboard-section">
             <div class="section-title-row">
-                <h2 class="section-title"><i class="bi bi-trophy"></i> Best Seller Products</h2>
+                <h2 class="section-title"><i class="bi bi-trophy"></i>Produk Terlaris</h2>
             </div>
             <div class="table-card">
                 <div class="table-responsive">
